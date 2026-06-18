@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { registerUser, loginUser,refreshAccessToken } from '../controllers/user.controller.js';
+import { registerUser, loginUser,refreshAccessToken } from '../controllers/user.controllers.js';
 import { verifyJWT } from '../middlewares/auth.middleware.js'; 
 
 const router = Router();
@@ -15,7 +15,6 @@ router.route("/login").post(loginUser);
 
 // Secured Route: POST /api/users/logout
 //verifyJWT is a  middleware
-router.route("/logout").post(verifyJWT, LogoutUser);
 
 router.route("/refresh-token").post(refreshAccessToken)
 
