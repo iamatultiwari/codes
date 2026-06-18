@@ -1,0 +1,14 @@
+{
+  "name": "codesfor",
+  "version": "1.0.0",
+  "description": "task of codes for tomorrow",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hii"
+  ],
+  "author": "atul tiwari",
+  "license": "ISC"
+}
