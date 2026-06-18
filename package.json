@@ -2,7 +2,9 @@
   "name": "codesfor",
   "version": "1.0.0",
   "description": "task of codes for tomorrow",
+  "type": "module",
   "main": "app.js",
+  
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"
