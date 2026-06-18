@@ -1,11 +1,14 @@
 import { User } from '../models/user.model.js';
 import jwt from 'jsonwebtoken'
+import { ApiError } from '../configApiError.js';
+import { ApiResponse } from '../config/Apiresponse.js';
+import { asyncHandler } from '../config/asynchandler.js';
 
 import dotenv from "dotenv";
 dotenv.config();
 
 
-// Utility: Generate Access and Refresh Tokens
+//  Generate Access and Refresh Tokens
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -58,7 +61,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   // Fetch user without sensitive info by mdb id as its default docs id 
   const createdUser = await User.findById(user._id).select
-  ("-password -refreshToken");// ky ky nhi chahiye vo -
+  ("-password -refreshToken");
 
   if (!createdUser) {
     throw new ApiError(500, "Something went wrong while registering the user");
@@ -71,7 +74,7 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 
-//**  Controller: Login User
+// Controller: Login User
 
 const loginUser = asyncHandler(async (req, res) => {
   //req.body - data
@@ -127,33 +130,6 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 
-//  Controller: Logout User
-
-const LogoutUser = asyncHandler(async (req, res) => {
-  // Remove refreshToken from DB
-  await User.findByIdAndUpdate(
-    req.user._id,
-    {
-      $set: {//mdb operator 
-        refreshToken: undefined
-      }
-    },
-    {
-      new: true
-    }
-  );
-
-  const options = {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict"
-  };
-
-  return res.status(200)
-    .clearCookie("accessToken", options)
-    .clearCookie("refreshToken", options)
-    .json(new ApiResponse(200, {}, "User logged out"));
-})
 //   controller - for accessofrefreshtoken
 const refreshAccessToken = asyncHandler(async(req,res) =>
   {
@@ -211,6 +187,5 @@ const refreshAccessToken = asyncHandler(async(req,res) =>
 export {
   registerUser,
   loginUser,
-  LogoutUser,
   refreshAccessToken
 };
