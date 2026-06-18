@@ -13,7 +13,6 @@ router.route("/register").post(
 // Route: POST /api/users/login
 router.route("/login").post(loginUser);
 
-// Secured Route: POST /api/users/logout
 //verifyJWT is a  middleware
 
 router.route("/refresh-token").post(refreshAccessToken)
